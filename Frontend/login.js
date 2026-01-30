@@ -13,10 +13,8 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         const result = await response.json();
 
         if (result.success) {
-            // Redirect to your "friendly" home page or dashboard
             window.location.href = '/Frontend/dashboard.html';
         } else {
             errorMsg.textContent = "Invalid username or password.";
         }
     });
-
