@@ -12,10 +12,9 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
         });
 
         const result = await response.json();
-
         if (result.success) {
             window.alert("User Successfully created!");
         } else {
-            errorMsg.textContent = "User already exists";
+            errorMsg.textContent = "Error";
         }
     });
