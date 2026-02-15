@@ -40,8 +40,8 @@ router.post('/signup',async (req,res) => {
             return res.status(401).json({ success: false, message: " User Already Exists, try different username"});
         }
 
-        const saltString = 10;
-        const hashPass = await bcrypt.hash(password,saltString);
+        const saltRounds = 10;
+        const hashPass = await bcrypt.hash(password,saltRounds);
 
         const newUser = await pgressObj.signUp(username,hashPass)
 
