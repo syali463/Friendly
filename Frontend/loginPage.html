@@ -1,26 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title> Friendly</title>
+    <title>Login</title>
     <meta charset="UTF-8">
-    <meta name="description" content="menu">
     <meta name="viewport" content="width:device-width, initial-scale:1.0">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-<h1>Friendly</h1>
-
-<div>
+<div id="loginContainer">
     <form id="loginForm">
-    <input id="username" type="text" placeholder="email" autocomplete="username">
-    <br>
-    <input id="password" type="password" placeholder="password" autocomplete="current-password">
-    <br>
-    <input type="submit" value="Login">
+        <h2>Login</h2>
+        <p><input type="email" id="username" placeholder="email" autocomplete="username"></p>
+        <p><input id="password" type="password" placeholder="password" autocomplete="current-password"></p>
+        <button type="submit">Login</button>
     </form>
-    <p id="message">Not a user?</p>
-    <a href="signup.html">Sign Up</a>
+    <div id="newUser">
+        <p id="message">Not a user?</p>
+        <p><a href="signup.html">Sign Up</a></p>
+</div>
 </div>
 <script src="login.js"></script>
 </body>

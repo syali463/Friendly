@@ -1,0 +1,97 @@
+/* 1. Global Reset & Body Styling */
+* {
+    box-sizing: border-box; /* Ensures padding doesn't mess up widths */
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1f5ebc; /* Light grey background */
+    display: flex;             /* Flexbox to center everything */
+    justify-content: center;   /* Center horizontally */
+    align-items: center;       /* Center vertically */
+    height: 100vh;             /* Full viewport height */
+}
+
+/* 2. The Main Card Container */
+#loginContainer, #signUp {
+    background-color: white;
+    padding: 4.5rem;
+    border-radius: 10px;       /* Rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle drop shadow */
+    width: 100%;
+    max-width: 400px;          /* Prevents it from getting too wide on desktop */
+    text-align: center;
+}
+
+/* 3. Typography */
+h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+/* 4. Form Elements */
+/* Target the paragraph tags wrapping inputs to control spacing */
+#loginForm p, #signupForm p {
+    margin-bottom: 1rem;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s; /* Smooth transition for focus */
+}
+
+input:focus {
+    border-color: #007bff;     /* Blue border when clicked */
+    outline: none;
+}
+
+/* 5. The Button */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff; /* Nice professional blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+
+button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* 6. Footer / Existing User Section */
+#newUser, #existingUser {
+    margin-top: 1.5rem;
+    border-top: 1px solid #eee; /* Divider line */
+    padding-top: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+#existingUser p, #newUser p {
+    margin: 10px 0;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+a:hover {
+    text-decoration: underline;
+}

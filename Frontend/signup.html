@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Sign Up</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="signUp">
     <form id="signupForm">
-        <h1 id="signUpHead">Sign Up</h1>
-        <input type="email" id="signupEmail" required>
-        <input type="password" id="signupPassword" required>
+        <h2>Sign Up</h2>
+        <p><input type="email" placeholder="email" id="signupEmail" required></p>
+        <p><input type="password" placeholder="password" id="signupPassword" required></p>
         <button type="submit">Sign Up</button>
     </form>
-    <p id="existingUser">Already a User?</p>
-    <a href="loginPage.html">Log In</a>
+    <div id="existingUser">
+    <p>Already a User?</p>
+    <p><a href="loginPage.html">Log In</a></p>
+    </div>
+    </div>
     <script src="signup.js"></script>
 </body>
 </html>
