@@ -9,12 +9,14 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: userVal, password: passVal })
         });
-
+        console.log(body);
         const result = await response.json();
 
         if (result.success) {
-            localStorage.setItem('token',result.token)
-            window.location.href = '/frontend/dashboard.html';
+            console.log(result.token);
+            localStorage.setItem('token',result.token);
+            localStorage.setItem("user", result.user);
+            window.location.href = 'dashboard.html';
         } else {
             errorMsg.textContent = "Invalid username or password.";
         }
