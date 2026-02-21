@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require('../config/db'); 
 const bcrypt = require('bcrypt');
 const postgresRepo = require('../config/postgresRepo');
+const jwt = require('jsonwebtoken')
 
 const pgressObj = new postgresRepo(db);
 
@@ -19,7 +20,11 @@ router.post('/login', async (req, res) => {
         const isMatch = await bcrypt.compare(password,user.password);
 
         if (isMatch) {
-            return res.json({ success: true, message: "Login successful!", user: user.username });
+            const jtoken = jwt.sign(
+                { Client:user.username },
+                process.env.SECRET_TOKEN,
+                { expiresIn: '1h' });
+            return res.json({ success: true, message: "Login successful!", user: user.username, token:jtoken });
         } else {
             return res.status(401).json({ success: false, message: "Wrong password" });
         }

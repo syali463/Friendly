@@ -13,6 +13,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         const result = await response.json();
 
         if (result.success) {
+            localStorage.setItem('token',result.token)
             window.location.href = '/frontend/dashboard.html';
         } else {
             errorMsg.textContent = "Invalid username or password.";
