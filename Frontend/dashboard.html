@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
 <body>
+    <script>
+    // Check for the token IMMEDIATELY when the page loads
+    const token = localStorage.getItem('userToken');
+
+    if (!token) {
+        // If the token is gone (because you logged out), kick them out
+        window.location.replace('/frontend/login.html'); 
+    }
+    </script>
     <h1>Welcome to the Friendly Dashboard!</h1>
     <p>You have successfully logged in.</p>
     <button id="logout">Logout</button>
