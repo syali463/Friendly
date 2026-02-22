@@ -1,15 +1,14 @@
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const userVal = document.getElementById('username').value;
+        const username = document.getElementById('username').value;
         const passVal = document.getElementById('password').value;
         const errorMsg = document.getElementById('message');
 
         const response = await fetch('http://localhost:3000/api/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: userVal, password: passVal })
+            body: JSON.stringify({  username, password: passVal })
         });
-        console.log(body);
         const result = await response.json();
 
         if (result.success) {
