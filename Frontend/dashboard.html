@@ -20,11 +20,11 @@
             <h2>Add Subscription</h2>
             <div class="form-group">
                 <label for="subName">Name: </label>
-                <input type="text" id="subName" name="name" placeholder="e.g Netflix">
+                <input type="text" id="subName" name="subName" placeholder="e.g Netflix" required>
             </div>
             <div class="form-group">
                 <label for="price">Amount: </label>
-                <input type="text" id="price" name="price" placeholder="Enter Amount">
+                <input type="text" id="price" name="price" placeholder="Enter Amount" required>
             </div>
             <div class="form-group">
                 <label for="currency">Currency:</label>
@@ -33,17 +33,21 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="billingCyle">Billing Cycle: </label>
-                <select id="billingCyle" name="billingCyle">
-                    <option value="Monthly" selected>Monthly</option>
-                    <option value="Weekly" selected>Weekly</option>
-                    <option value="Yearly" selected>Yearly</option> 
+                <label for="category">Category: </label>
+                <select id="category" name="category">
                 </select>
-
             </div>
-            <div class="modal-actions">
-            <button type="submit" class="save-btn">Save</button>
-            <button type="button" id="closeModal" class="cancel-btn">Cancel</button>
+            <div class="form-group">
+                <label for="billingCycle">Billing Cycle: </label>
+                <select id="billingCycle" name="billingCycle">
+                    <option value="Monthly" selected>Monthly</option>
+                    <option value="Weekly" >Weekly</option>
+                    <option value="Yearly" >Yearly</option> 
+                </select>
+            </div>
+        <div class="modal-actions">
+        <button type="submit" id="saveModal" class="save-btn">Save</button>
+        <button type="button" id="closeModal" class="cancel-btn">Cancel</button>
         </div>
 
         </form>
