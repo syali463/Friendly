@@ -1,17 +1,54 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <title>Dashboard</title>
+    <meta name="viewport" content="width:device-width, initial-scale:1.0">
+    <link rel="stylesheet" href="dashboard.css">
+    </head>
 <body>
     <script>
-    // Check for the token IMMEDIATELY when the page loads
-    const token = localStorage.getItem('userToken');
+    const token = localStorage.getItem('token');
 
     if (!token) {
-        // If the token is gone (because you logged out), kick them out
-        window.location.replace('/frontend/login.html'); 
+        window.location.replace('403.html'); 
     }
     </script>
-    <h1>Welcome to the Friendly Dashboard!</h1>
-    <p>You have successfully logged in.</p>
+    <h1>Welcome to the Subbly Dashboard!</h1>
+    <button id="addSubscription">Add Subscription</button>
+    <div id="modal">
+        <form id="subForm">
+            <h2>Add Subscription</h2>
+            <div class="form-group">
+                <label for="subName">Name: </label>
+                <input type="text" id="subName" name="name" placeholder="e.g Netflix">
+            </div>
+            <div class="form-group">
+                <label for="price">Amount: </label>
+                <input type="text" id="price" name="price" placeholder="Enter Amount">
+            </div>
+            <div class="form-group">
+                <label for="currency">Currency:</label>
+                <select id="currency" name="currency">
+                    <option value="USD" selected>US Dollar ($)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="billingCyle">Billing Cycle: </label>
+                <select id="billingCyle" name="billingCyle">
+                    <option value="Monthly" selected>Monthly</option>
+                    <option value="Weekly" selected>Weekly</option>
+                    <option value="Yearly" selected>Yearly</option> 
+                </select>
+
+            </div>
+            <div class="modal-actions">
+            <button type="submit" class="save-btn">Save</button>
+            <button type="button" id="closeModal" class="cancel-btn">Cancel</button>
+        </div>
+
+        </form>
+
+    </div>
     <button id="logout">Logout</button>
     <script src="dashBoard.js"></script>
 </body>

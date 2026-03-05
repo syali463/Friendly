@@ -1,0 +1,73 @@
+/* 1. The Dimmed Background (Overlay) */
+#modal {
+    display: none;          /* Hidden by default */
+    position: fixed;        /* Stays in place even if you scroll */
+    z-index: 1000;          /* Sits on top of everything else */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+    backdrop-filter: blur(4px);           /* Modern touch: blurs the background */
+    align-items: center;    /* Vertically centers the modal box */
+    justify-content: center; /* Horizontally centers the modal box */
+}
+
+/* 2. The White Popup Box */
+#modal form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 450px;       /* Won't get too big on desktop */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;              /* Space between form groups */
+}
+
+/* 3. Label and Input Alignment */
+.form-group {
+    display: flex;
+    flex-direction: column; /* Stack label over input for a cleaner mobile look */
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #333;
+    font-family: sans-serif;
+}
+
+input, select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+/* 4. The Action Buttons */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.save-btn {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
