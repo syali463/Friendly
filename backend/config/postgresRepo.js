@@ -1,5 +1,6 @@
-class postgresRepo{
+import db from './db.js';
 
+class postgresRepo{
     constructor(databaseAccesor){
     this.db = databaseAccesor;
     }
@@ -16,5 +17,6 @@ class postgresRepo{
         return result.rows[0];
     }
 }
+const repoSingleton = new postgresRepo(db);
 
-module.exports = postgresRepo;
+export default repoSingleton;

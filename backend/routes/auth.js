@@ -1,16 +1,14 @@
-const express = require('express');
-const router = express.Router();
-const db = require('../config/db'); 
-const bcrypt = require('bcrypt');
-const postgresRepo = require('../config/postgresRepo');
-const jwt = require('jsonwebtoken')
+import express from 'express';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
-const pgressObj = new postgresRepo(db);
+const router = express.Router();
 
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
     try {
+        const pgressObj = req.db;
         const user = await pgressObj.findUsername(username);
 
         if (!user) {
@@ -39,6 +37,7 @@ router.post('/signup',async (req,res) => {
     const {username, email, password} = req.body;
 
     try {
+        const pgressObj = req.db;
         const user = await pgressObj.findUsername(username);
 
         if(user){
@@ -59,4 +58,4 @@ router.post('/signup',async (req,res) => {
 })
 
 
-module.exports = router;
+export default router

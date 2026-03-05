@@ -3,7 +3,7 @@ const categories = [
     {id : 'util', name : 'Utilities'},
     {id : 'prod', name : 'Productivity'}
 ];
-const subForm =document.getElementById("subForm");
+const subForm = document.getElementById("subForm");
 const addBtn = document.getElementById("addSubscription");
 const modal = document.getElementById("modal");
 const closeBtn = document.getElementById("closeModal");
@@ -35,7 +35,7 @@ subForm.addEventListener('submit',async (e) =>{
 
     console.log(subData);
 
-    const request = await fetch('http://localhost:3000/api/dashboard', {
+    const request = await fetch('http://localhost:3000/api/dashboard/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
