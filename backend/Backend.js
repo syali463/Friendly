@@ -5,6 +5,10 @@ import cors from 'cors';
 import authRoute from './routes/auth.js';
 import subscriptionRoute from './routes/addSub.js';
 
+const verifyToken = (req, res, next) => {
+    if(!req.headers){ return res.sta}
+}
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -19,6 +23,7 @@ app.get('/test', (req, res) => {
 });
 
 app.use('/api', authRoute);
+
 
 app.use('/api/dashboard', subscriptionRoute)
 

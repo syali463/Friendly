@@ -30,16 +30,19 @@ subForm.addEventListener('submit',async (e) =>{
 
     const formData = new FormData(subForm);
     
-    // 2. Convert it into a clean object
     const subData = Object.fromEntries(formData.entries());
 
     console.log(subData);
 
     const request = await fetch('http://localhost:3000/api/dashboard/add', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Authorization' : `Bearer ${localStorage.getItem('token')}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-            service_name : subName, price, currency, category, billing_cycle : billingCycle
+            service_name : subData.subName,
+            price : subData.price,
+            currency : subData.currency,
+            category : subData.category,
+            billing_cycle : subData.billingCycle
         })
     });
 

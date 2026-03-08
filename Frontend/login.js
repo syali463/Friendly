@@ -14,7 +14,8 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         if (result.success) {
             console.log(result.token);
             localStorage.setItem('token',result.token);
-            localStorage.setItem("user", result.user);
+            localStorage.setItem('user', result.user);
+            localStorage.setItem('id', result.id)
             window.location.href = 'dashboard.html';
         } else {
             errorMsg.textContent = "Invalid username or password.";

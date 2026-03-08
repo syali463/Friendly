@@ -10,11 +10,15 @@ class postgresRepo{
        return result.rows[0];
     }
 
-    async signUp(username, email, hashedPassword,) {
+    async signUp(username, email, hashedPassword) {
         const result = await this.db.query('INSERT INTO users (username,email,password) VALUES ($1,$2,$3) RETURNING id, username',
         [username,email,hashedPassword]);
 
         return result.rows[0];
+    }
+
+    async addSub(service_name, price, currency, billing_cycle){
+        const result = await this.db.query('INSERT INTO subscriptions (')
     }
 }
 const repoSingleton = new postgresRepo(db);
