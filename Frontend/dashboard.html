@@ -4,18 +4,37 @@
         <title>Dashboard</title>
     <meta name="viewport" content="width:device-width, initial-scale:1.0">
     <link rel="stylesheet" href="dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     </head>
 <body>
-    <script>
+    <!-- <script>
     const token = localStorage.getItem('token');
 
     if (!token) {
         window.location.replace('403.html'); 
     }
-    </script>
-    <h1>Welcome to the Subbly Dashboard!</h1>
-    <button id="addSubscription">Add Subscription</button>
-    <div id="modal">
+    </script> -->
+    <button id="menuToggle" class="menu-btn">☰</button>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+        <span class="logo">Subbly</span>
+    </div>
+            <nav>
+                <button id="addSubscription" class="nav-item active">
+                <span class="icon">+</span> Add Subscription
+            </button>
+            <button class="nav-item">
+                <span class="icon">📊</span> Budgeting (Soon)
+            </button>
+            <button class="nav-item">
+                <span class="icon">⚙️</span> Settings
+            </button>
+            </nav>
+            <button id="logout">Logout</button>
+        </aside>
+    </div>
+    <dialog id="modal">
         <form id="subForm">
             <h2>Add Subscription</h2>
             <div class="form-group">
@@ -32,6 +51,7 @@
                     <option value="USD" selected>US Dollar ($)</option>
                 </select>
             </div>
+            <!-- Categories come from dashboard.js initCategories -->
             <div class="form-group">
                 <label for="category">Category: </label>
                 <select id="category" name="category">
@@ -49,11 +69,9 @@
         <button type="submit" id="saveModal" class="save-btn">Save</button>
         <button type="button" id="closeModal" class="cancel-btn">Cancel</button>
         </div>
-
         </form>
 
-    </div>
-    <button id="logout">Logout</button>
+    </dialog>
     <script src="dashBoard.js"></script>
 </body>
 </html>

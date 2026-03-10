@@ -12,10 +12,9 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         const result = await response.json();
 
         if (result.success) {
-            console.log(result.token);
+            console.log(result);
             localStorage.setItem('token',result.token);
             localStorage.setItem('user', result.user);
-            localStorage.setItem('id', result.id)
             window.location.href = 'dashboard.html';
         } else {
             errorMsg.textContent = "Invalid username or password.";
