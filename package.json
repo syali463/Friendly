@@ -2,7 +2,9 @@
   "name": "friendly",
   "version": "1.0.0",
   "main": "Backend.js",
-  "scripts": {},
+  "scripts": {
+    "dev" : "npx nodemon -r dotenv/config ./backend/Backend.js dotenv_config_path=./backend/.env" 
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/syali463/Friendly.git"

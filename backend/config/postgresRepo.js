@@ -17,9 +17,13 @@ class postgresRepo{
         return result.rows[0];
     }
 
-    async addSub(service_name, price, currency, billing_cycle){
-        const result = await this.db.query('INSERT INTO subscriptions (')
+    async addSub(id, service_name, price,category, currency, billing_cycle){
+        const result = await this.db.query(
+            'INSERT INTO subscriptions (user_id,service_name,price,billing_cycle,currency, category) VALUES($1,$2,$3,$4,$5,$6)',
+        [id, service_name, price,billing_cycle, currency, category]);
+        return result.rows[0];
     }
+
 }
 const repoSingleton = new postgresRepo(db);
 

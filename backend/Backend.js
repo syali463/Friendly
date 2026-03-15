@@ -9,7 +9,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 const verifyToken = (req, res, next) => {
-    console.log(req);
     const header = req.headers['authorization'];
     if(!header){ return res.status(403).json({success : false, message : "not authorized"})}
     const token =  header && header.split(' ')[1];
@@ -20,17 +19,18 @@ const verifyToken = (req, res, next) => {
     })
 
 }
-app.use((req, res, next) =>{
+app.use((req,res, next) =>{
     req.db = postgresRepo;
     next();
 })
-app.use('/api', authRoute);
-
-app.use(verifyToken);
 
 app.get('/test', (req, res) => {
     res.send("Backend is working!");
 });
+
+app.use('/api', authRoute);
+
+app.use(verifyToken);
 
 
 app.use('/api/dashboard', subscriptionRoute)

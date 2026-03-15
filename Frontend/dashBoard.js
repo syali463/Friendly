@@ -49,14 +49,12 @@ subForm.addEventListener('submit',async (e) =>{
     
     const subData = Object.fromEntries(formData.entries());
 
-    console.log(subData);
-
     const request = await fetch('http://localhost:3000/api/dashboard/add', {
         method: 'POST',
         headers: { 'authorization' : `Bearer ${localStorage.getItem('token')}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
             service_name : subData.subName,
-            price : Number(subData.price),
+            price : subData.price,
             currency : subData.currency,
             category : subData.category,
             billing_cycle : subData.billingCycle
@@ -68,6 +66,7 @@ subForm.addEventListener('submit',async (e) =>{
     console.log(result);
     if(result.success){
         window.alert("Action Successful")
+        modal.close();
     }
     else{
         window.alert(result.message);

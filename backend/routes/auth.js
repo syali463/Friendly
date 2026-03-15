@@ -21,7 +21,7 @@ router.post('/login', async (req, res) => {
                 { Client:user.username , id:user.id},
                 process.env.SECRET_TOKEN,
                 { expiresIn: '1h' });
-            return res.json({ success: true, message: "Login successful!", user: user.username, token:jtoken });
+            return res.status(200).json({ success: true, message: "Login successful!", user: user.username, token:jtoken });
         } else {
             return res.status(401).json({ success: false, message: "Wrong password" });
         }
