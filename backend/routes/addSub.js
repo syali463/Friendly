@@ -13,7 +13,7 @@ router.post('/add', async(req, res) => {
     }
     catch(err){
         //database error
-        if(err.code='23505'){
+        if(err.code === '23505'){
             return res.status(409).json({
                 success: false, 
                 message: `Looks like you already have a subscription for ${service_name} saved!` 
