@@ -18,17 +18,8 @@ pipeline {
             }
         }
         stage('Run tests'){
-            try{
             steps{
                 sh 'npx playwright test'
-            }
-            }
-            catch(Exception e){
-                echo "Caught exception: ${e.message}"
-                currentBuild.result = 'UNSTABLE'
-            }
-            finally{
-                sh 'docker-compose down'
             }
         }
     }
@@ -43,6 +34,7 @@ pipeline {
                 reportFiles: 'index.html',
                 reportName: 'Playwright Report'
             ])
+            sh 'docker-compose down'
         }
     }
 
