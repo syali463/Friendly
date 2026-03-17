@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Builder Docker Image'){
             steps{
-                sh 'docker-compose up -d --build --wait'
+                sh 'docker compose up -d --build --wait'
             }
         }
         stage('Install Dependencies'){
@@ -34,7 +34,7 @@ pipeline {
                 reportFiles: 'index.html',
                 reportName: 'Playwright Report'
             ])
-            sh 'docker-compose down'
+            sh 'docker compose down'
         }
     }
 
