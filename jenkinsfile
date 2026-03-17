@@ -18,7 +18,6 @@ pipeline {
             }
         }
         stage('Run tests'){
-            script{
             try{
             steps{
                 sh 'npx playwright test'
@@ -30,7 +29,6 @@ pipeline {
             }
             finally{
                 sh 'docker-compose down'
-            }
             }
         }
     }
