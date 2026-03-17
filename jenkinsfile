@@ -1,0 +1,52 @@
+pipeline {
+    agent{label 'node-agent'}
+    stages {
+        stage('Checkout Repo'){
+            steps{
+                checkout scm
+            }
+        }
+        stage('Builder Docker Image'){
+            steps{
+                sh 'docker-compose up -d --build --wait'
+            }
+        }
+        stage('Install Dependencies'){
+            steps{
+                sh 'npm install'
+                sh 'npx playwright install --with-deps'
+            }
+        }
+        stage('Run tests'){
+            script{
+            try{
+            steps{
+                sh 'npx playwright test'
+            }
+            }
+            catch(Exception e){
+                echo "Caught exception: ${e.message}"
+                currentBuild.result = 'UNSTABLE'
+            }
+            finally{
+                sh 'docker-compose down'
+            }
+            }
+        }
+    }
+    post{
+        always{
+            // Archive Playwright reports for debugging
+            publishHTML(target: [
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'playwright-report',
+                reportFiles: 'index.html',
+                reportName: 'Playwright Report'
+            ])
+        }
+    }
+
+}
+
