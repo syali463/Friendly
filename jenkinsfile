@@ -12,7 +12,7 @@ pipeline {
             steps {
                 // --build ensures your new Playwright Dockerfile is used
                 // --wait ensures healthchecks pass before moving to the next step
-                withCredentials([file(credentialsId: 'dockerenv.env', variable: 'ENV_FILE_PATH')],file(credentialsId: 'envfile', variable: 'ENV_FILE')) {
+                withCredentials([file(credentialsId: 'dockerenv.env', variable: 'ENV_FILE_PATH'),file(credentialsId: 'envfile', variable: 'ENV_FILE')]) {
             // Copy the secret file from its temporary Jenkins location to your app folder
             sh "cp \$ENV_FILE ./backend/.env"
             sh "cp \$ENV_FILE_PATH ./dockerenv.env"
