@@ -10,6 +10,7 @@ pipeline {
 
         stage('Build & Start Containers') {
             steps {
+                echo "${DOCKER_HOST}"
                 // --build ensures your new Playwright Dockerfile is used
                 // --wait ensures healthchecks pass before moving to the next step
                 withCredentials([file(credentialsId: 'dockerenv.env', variable: 'ENV_FILE_PATH'),file(credentialsId: 'envfile', variable: 'ENV_FILE')]) {
