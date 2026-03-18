@@ -1,17 +1,18 @@
 pipeline {
     agent {
-        label 'node-agent'
-        docker {
-            image 'mcr.microsoft.com/playwright:v1.42.1-jammy'
-            args '--network jenkins-net -u 0 -v /var/run/docker.sock:/var/run/docker.sock'
-        }
+        // Use ONLY the label. Let the Docker Cloud config handle the container.
+        label 'node-agent' 
+    }
+
+    environment {
+        CI = 'true'
+        BACKEND_URL = "http://backend:3000"
+        FRONTEND_URL = "http://web:80"
     }
 
     stages {
         stage('Setup Secrets') {
             steps {
-                // This pulls your secrets from Jenkins and writes them to files
-                // so Docker Compose can find them.
                 withCredentials([
                     file(credentialsId: 'dockerenv.env', variable: 'ENV_FILE_PATH'),
                     file(credentialsId: 'envfile', variable: 'ENV_FILE')
@@ -21,31 +22,30 @@ pipeline {
                 }
             }
         }
-        stage('Install Docker Tools') {
+
+        stage('Launch Stack') {
             steps {
-                echo 'Installing Docker CLI and Compose (Generic Version)...'
-                // This gets the job done in 20 seconds without GPG keys
-                sh '''
-                    apt-get update && \
-                    apt-get install -y docker.io docker-compose && \
-                    docker --version && \
-                    docker-compose --version
-                '''
+                // Use 'docker compose' (no hyphen), the modern version
+                sh 'docker compose up -d --build --wait'
             }
         }
 
-        stage('Run App & Tests') {
+        stage('Run Tests') {
             steps {
-                echo 'Starting your stack and running Playwright...'
-                sh 'docker-compose up -d --build'
-                sh 'npx playwright test'
+                // Run Playwright INSIDE a temporary container on the same network
+                sh '''
+                docker run --network jenkins-net \
+                -v $(pwd):/work -w /work \
+                mcr.microsoft.com/playwright:v1.42.1-jammy \
+                npx playwright test
+                '''
             }
         }
     }
 
     post {
         always {
-            sh 'docker-compose down'
+            sh 'docker compose down'
         }
     }
 }
