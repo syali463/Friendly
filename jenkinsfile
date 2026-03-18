@@ -1,31 +1,50 @@
 pipeline {
-    agent{label 'node-agent'}
+    agent { label 'node-agent' }
+
     stages {
-        stage('Checkout Repo'){
-            steps{
+        stage('Checkout Repo') {
+            steps {
                 checkout scm
             }
         }
-        stage('Builder Docker Image'){
-            steps{
-                sh 'docker compose up -d --build --wait'
+
+        stage('Build & Start Containers') {
+            steps {
+                // --build ensures your new Playwright Dockerfile is used
+                // --wait ensures healthchecks pass before moving to the next step
+                withCredentials([file(credentialsId: 'dockerenv.env', variable: 'ENV_FILE_PATH')]) {
+            // Copy the secret file from its temporary Jenkins location to your app folder
+            sh "cp \$ENV_FILE_PATH ./dockerenv.env"
+            sh "docker compose up -d --build --wait"
+        }
             }
         }
-        stage('Install Dependencies'){
-            steps{
-                sh 'npm install'
-                sh 'npx playwright install --with-deps'
-            }
-        }
-        stage('Run tests'){
-            steps{
-                sh 'npx playwright test'
+
+        stage('Run Playwright Tests') {
+            steps {
+                script {
+                    try {
+                        // Run tests inside the already-running playwright container
+                        sh 'docker-compose exec -T playwright npx playwright test'
+                    } catch (Exception e) {
+                        currentBuild.result = 'UNSTABLE'
+                        echo "Tests failed: ${e.message}"
+                    }
+                }
             }
         }
     }
-    post{
-        always{
-            // Archive Playwright reports for debugging
+
+    post {
+        always {
+            sh 'rm -f ./dockerenv.env'
+            // 1. Copy the report out of the container so Jenkins can see it
+            sh 'docker cp test-runner:/app/playwright-report ./playwright-report'
+            
+            // 2. Tear down the containers
+            sh 'docker compose down'
+
+            // 3. Publish the report to the Jenkins UI
             publishHTML(target: [
                 allowMissing: false,
                 alwaysLinkToLastBuild: true,
@@ -34,9 +53,6 @@ pipeline {
                 reportFiles: 'index.html',
                 reportName: 'Playwright Report'
             ])
-            sh 'docker compose down'
         }
     }
-
 }
-
