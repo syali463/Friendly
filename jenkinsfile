@@ -10,14 +10,11 @@ pipeline {
 
         stage('Build & Start Containers') {
             steps {
-                echo "${DOCKER_HOST}"
-                // --build ensures your new Playwright Dockerfile is used
-                // --wait ensures healthchecks pass before moving to the next step
-                withCredentials([file(credentialsId: 'dockerenv.env', variable: 'ENV_FILE_PATH'),file(credentialsId: 'envfile', variable: 'ENV_FILE')]) {
-            // Copy the secret file from its temporary Jenkins location to your app folder
+            withCredentials([file(credentialsId: 'dockerenv.env', variable: 'ENV_FILE_PATH'),file(credentialsId: 'envfile', variable: 'ENV_FILE')]) {
             sh "cp \$ENV_FILE ./backend/.env"
             sh "cp \$ENV_FILE_PATH ./dockerenv.env"
             sh "docker compose up -d --build --wait"
+            sh 'docker ps'
         }
             }
         }
@@ -26,7 +23,6 @@ pipeline {
             steps {
                 script {
                     try {
-                        // Run tests inside the already-running playwright container
                         sh 'docker-compose exec -T playwright npx playwright test'
                     } catch (Exception e) {
                         currentBuild.result = 'UNSTABLE'
@@ -40,13 +36,10 @@ pipeline {
     post {
         always {
             sh 'rm -f ./dockerenv.env'
-            // 1. Copy the report out of the container so Jenkins can see it
             sh 'docker cp test-runner:/app/playwright-report ./playwright-report'
             
-            // 2. Tear down the containers
             sh 'docker compose down'
 
-            // 3. Publish the report to the Jenkins UI
             publishHTML(target: [
                 allowMissing: false,
                 alwaysLinkToLastBuild: true,
