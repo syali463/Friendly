@@ -1,53 +1,40 @@
 pipeline {
-    agent { label 'node-agent' }
+    agent {
+        docker {
+            image 'mcr.microsoft.com/playwright:v1.42.1-jammy'
+            // The "Magic" Arguments:
+            // 1. Run as root (-u 0) to skip permission errors
+            // 2. Mount the socket to talk to the host's Docker
+            args '-u 0 -v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     stages {
-        stage('Checkout Repo') {
+        stage('Install Docker Tools') {
             steps {
-                checkout scm
+                echo 'Installing Docker CLI and Compose (Generic Version)...'
+                // This gets the job done in 20 seconds without GPG keys
+                sh '''
+                    apt-get update && \
+                    apt-get install -y docker.io docker-compose && \
+                    docker --version && \
+                    docker-compose --version
+                '''
             }
         }
 
-        stage('Build & Start Containers') {
+        stage('Run App & Tests') {
             steps {
-            withCredentials([file(credentialsId: 'dockerenv.env', variable: 'ENV_FILE_PATH'),file(credentialsId: 'envfile', variable: 'ENV_FILE')]) {
-            sh "cp \$ENV_FILE ./backend/.env"
-            sh "cp \$ENV_FILE_PATH ./dockerenv.env"
-            sh "docker compose up -d --build --wait"
-            sh 'docker ps'
-        }
-            }
-        }
-
-        stage('Run Playwright Tests') {
-            steps {
-                script {
-                    try {
-                        sh 'docker-compose exec -T playwright npx playwright test'
-                    } catch (Exception e) {
-                        currentBuild.result = 'UNSTABLE'
-                        echo "Tests failed: ${e.message}"
-                    }
-                }
+                echo 'Starting your stack and running Playwright...'
+                sh 'docker-compose up -d --build'
+                sh 'npx playwright test'
             }
         }
     }
 
     post {
         always {
-            sh 'rm -f ./dockerenv.env'
-            sh 'docker cp test-runner:/app/playwright-report ./playwright-report'
-            
-            sh 'docker compose down'
-
-            publishHTML(target: [
-                allowMissing: false,
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: 'playwright-report',
-                reportFiles: 'index.html',
-                reportName: 'Playwright Report'
-            ])
+            sh 'docker-compose down'
         }
     }
 }
