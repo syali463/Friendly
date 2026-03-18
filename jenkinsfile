@@ -1,15 +1,26 @@
 pipeline {
     agent {
+        label 'node-agent'
         docker {
             image 'mcr.microsoft.com/playwright:v1.42.1-jammy'
-            // The "Magic" Arguments:
-            // 1. Run as root (-u 0) to skip permission errors
-            // 2. Mount the socket to talk to the host's Docker
-            args '-u 0 -v /var/run/docker.sock:/var/run/docker.sock'
+            args '--network jenkins-net -u 0 -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
 
     stages {
+        stage('Setup Secrets') {
+            steps {
+                // This pulls your secrets from Jenkins and writes them to files
+                // so Docker Compose can find them.
+                withCredentials([
+                    file(credentialsId: 'dockerenv.env', variable: 'ENV_FILE_PATH'),
+                    file(credentialsId: 'envfile', variable: 'ENV_FILE')
+                ]) {
+                    sh "cp \$ENV_FILE_PATH ./dockerenv.env"
+                    sh "cp \$ENV_FILE ./backend/.env"
+                }
+            }
+        }
         stage('Install Docker Tools') {
             steps {
                 echo 'Installing Docker CLI and Compose (Generic Version)...'

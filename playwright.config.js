@@ -1,6 +1,6 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
-
+const isCI = process.env.CI === 'true';
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -33,7 +33,7 @@ export default defineConfig({
     trace: 'on',
     screenshot : 'on',
     video : "on-first-retry",
-    baseURL: 'http://localhost:5500',
+    baseURL: isCI ? 'http://web:80' : 'http://localhost:5500',
   },
 
   /* Configure projects for major browsers */
@@ -75,7 +75,7 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  webServer: [
+  webServer: isCI ? [] : [
     {
     command: 'node Backend.js',
     cwd: './backend',
