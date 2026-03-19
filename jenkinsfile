@@ -34,10 +34,7 @@ pipeline {
             steps {
                 // Run Playwright INSIDE a temporary container on the same network
                 sh '''
-                docker run --network jenkins-net \
-                -v $(pwd):/work -w /work \
-                mcr.microsoft.com/playwright:v1.42.1-jammy \
-                npx playwright test
+                docker run npx playwright test
                 '''
             }
         }
