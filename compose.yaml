@@ -41,9 +41,20 @@ services:
     container_name: website
     build: ./frontend
     ports:
-      - "5500:80"
+      - 80:80
     networks:
       - jenkins-net
+  
+  test:
+    container_name: playwright
+    build: .
+    depends_on:
+      - web
+      - backend
+    networks:
+      - jenkins-net
+    # environment:
+    #   - http://web:80
 
 volumes:
   friendly_db-data:
