@@ -34,7 +34,7 @@ pipeline {
             steps {
                 // Run Playwright INSIDE a temporary container on the same network
                 sh '''
-                docker run npx playwright test
+                npx playwright test
                 '''
             }
         }
