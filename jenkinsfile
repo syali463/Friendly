@@ -1,8 +1,5 @@
 pipeline {
-    agent {
-        // Use ONLY the label. Let the Docker Cloud config handle the container.
-        label 'node-agent' 
-    }
+    agent { label 'node-agent' }
 
     environment {
         CI = 'true'
@@ -26,16 +23,17 @@ pipeline {
         stage('Launch Stack') {
             steps {
                 // Use 'docker compose' (no hyphen), the modern version
-                sh 'docker compose up -d --build --wait'
+                sh 'docker compose up -d --build --wait exit-code-from test'
             }
         }
 
-        stage('Run Tests') {
+        stage('check') {
             steps {
                 // Run Playwright INSIDE a temporary container on the same network
-                sh '''
-                npx playwright test
-                '''
+                echo '--Check WHOIAM--'
+                sh 'whoami'
+                echo '--Checkfilesocket--'
+                sh 'ls -la /var/run/docker.sock || echo "SOCKET NOT FOUND"'
             }
         }
     }
