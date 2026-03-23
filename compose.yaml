@@ -38,7 +38,7 @@ services:
         condition: service_healthy
 
   web:
-    container_name: website
+    container_name: webservice
     build: ./Frontend
     ports:
       - 80:80
