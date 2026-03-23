@@ -53,6 +53,9 @@ services:
       - backend
     networks:
       - jenkins-net
+    volumes:
+      - ".:/work"
+    working_dir: /work
     # environment:
     #   - http://web:80
 
