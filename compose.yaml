@@ -39,7 +39,7 @@ services:
 
   web:
     container_name: website
-    build: ./frontend
+    build: ./Frontend
     ports:
       - 80:80
     networks:
