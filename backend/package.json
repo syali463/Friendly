@@ -1,0 +1,33 @@
+{
+  "name": "friendly",
+  "version": "1.0.0",
+  "main": "Backend.js",
+  "scripts": {
+    "dev" : "npx nodemon -r dotenv/config ./backend/Backend.js dotenv_config_path=./backend/.env" 
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syali463/Friendly.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/syali463/Friendly/issues"
+  },
+  "homepage": "https://github.com/syali463/Friendly#readme",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.17.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.3.3"
+  },
+  "type": "module"
+}
