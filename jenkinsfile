@@ -23,7 +23,7 @@ pipeline {
         stage('Launch Stack') {
             steps {
                 // Use 'docker compose' (no hyphen), the modern version
-                sh 'docker compose up -d --build --wait exit-code-from test'
+                sh 'docker compose up -d --build --wait'
             }
         }
 
