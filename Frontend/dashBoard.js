@@ -51,14 +51,15 @@ subForm.addEventListener('submit',async (e) =>{
 
     const request = await fetch('http://localhost:3000/api/dashboard/add', {
         method: 'POST',
-        headers: { 'authorization' : `Bearer ${localStorage.getItem('token')}`, 'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json' },
         body: JSON.stringify({ 
             service_name : subData.subName,
             price : subData.price,
             currency : subData.currency,
             category : subData.category,
             billing_cycle : subData.billingCycle
-        })
+        }),
+        credentials : 'include'
     });
 
     const result = await request.json();
@@ -74,12 +75,12 @@ subForm.addEventListener('submit',async (e) =>{
 
 });
 
-document.getElementById("logout").addEventListener('click', (e) =>{
-    const token = localStorage.getItem('token');
-    if(!token){
-        window.location.replace('403.html');
-    }
-    localStorage.clear()
-    window.location.href ='loggedout.html';
-});
+// document.getElementById("logout").addEventListener('click', (e) =>{
+//     const token = localStorage.getItem('token');
+//     if(!token){
+//         window.location.replace('403.html');
+//     }
+//     localStorage.clear()
+//     window.location.href ='loggedout.html';
+// });
 initCategories();

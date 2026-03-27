@@ -5,13 +5,20 @@ import cors from 'cors';
 import authRoute from './routes/auth.js';
 import subscriptionRoute from './routes/addSub.js';
 import jwt from 'jsonwebtoken'
+import cookieParser from 'cookie-parser';
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: ['http://localhost:5500','http://127.0.0.1:5500'],
+    credentials: true
+}));
+
 app.use(express.json());
+app.use(cookieParser());
+
 const verifyToken = (req, res, next) => {
-    const header = req.headers['authorization'];
-    if(!header){ return res.status(403).json({success : false, message : "not authorized"})}
-    const token =  header && header.split(' ')[1];
+    const token = req.cookies.accessToken;
+    console.log("This is cookie:", req.cookies)
+    if(!token){ return res.status(403).json({success : false, message : "not authorized"})}
     jwt.verify(token,process.env.SECRET_TOKEN, (err, decode) =>{
         if(err) { return res.sendStatus(403).json(header);}
         req.user = decode

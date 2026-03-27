@@ -21,7 +21,8 @@ router.post('/login', async (req, res) => {
                 { Client:user.username , id:user.id},
                 process.env.SECRET_TOKEN,
                 { expiresIn: '1h' });
-            return res.status(200).json({ success: true, message: "Login successful!", user: user.username, token:jtoken });
+            res.cookie('accessToken',jtoken, {httpOnly:true,sameSite:'none',maxAge:3600000, secure: true});
+            return res.status(200).json({ success: true, message: "Login successful!" });
         } else {
             return res.status(401).json({ success: false, message: "Wrong password" });
         }
@@ -44,7 +45,7 @@ router.post('/signup',async (req,res) => {
         }
 
         const hashPass = await bcrypt.hash(password,10);
-
+              
         const newUser = await pgressObj.signUp(username, email, hashPass);
 
         return res.status(200).json({ success: true, message:"User has been created!"});

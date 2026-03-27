@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "Backend.js",
   "scripts": {
-    "dev" : "npx nodemon -r dotenv/config ./backend/Backend.js dotenv_config_path=./backend/.env" 
+    "dev": "npx nodemon -r dotenv/config ./backend/Backend.js dotenv_config_path=./backend/.env"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "description": "",
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
