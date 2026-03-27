@@ -1,19 +1,19 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 
-// test('has title', async ({ page }) => {
-//   await page.goto('http://localhost:5500/loginPage');
-
-//   // Expect a title "to contain" a substring.
-//   await expect(page).toHaveTitle(/Login/);
-// });
-
-test('google', async ({ page }) => {
-  await page.goto('https://www.google.com');
+test('has title', async ({ page }) => {
+  await page.goto('http://localhost:5500/loginPage');
 
   // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Google/);
+  await expect(page).toHaveTitle(/Login/);
 });
+
+// test('google', async ({ page }) => {
+//   await page.goto('https://www.google.com');
+
+//   // Expect a title "to contain" a substring.
+//   await expect(page).toHaveTitle(/Google/);
+// });
 
 // test('try login', async ({page}) =>{
 //   await page.goto('http://localhost:5500/loginPage')
