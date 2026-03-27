@@ -84,7 +84,7 @@ export default defineConfig({
     stdout : 'pipe',
   },
   {
-    command: 'npx serve ./frontend -p 5500',
+    command: 'npx serve ./Frontend -p 5500',
     url: 'http://localhost:5500',
     reuseExistingServer: !process.env.CI,
     stdout:'pipe',
